@@ -1,105 +1,179 @@
-# Classify-Waste-Products-Using-Transfer-Learning
+# ♻️ Waste Product Classification Using Transfer Learning and Fine-Tuning
 
-📖 About
+A computer vision project that classifies waste products using deep learning. The project compares feature extraction (transfer learning) and fine-tuning approaches with a pretrained VGG16 model to evaluate their effectiveness for image classification.
 
-This is a Final Project from the IBM AI Engineering Professional Certificate on Coursera. It solves a real-world environmental problem faced by a fictional company, EcoClean — automating the sorting of waste using computer vision.
+---
 
-The project compares two approaches: Feature Extraction (frozen VGG16 layers) vs Fine-Tuning (unfreezing deeper layers), giving a hands-on comparison of both transfer learning strategies.
+## 📖 Project Overview
 
+Efficient waste sorting is an important step toward improving recycling systems and reducing environmental impact. Manual sorting is often slow and prone to errors, making computer vision a promising solution for automated waste classification.
 
-⏱️ Estimated time: 60 minutes
+This project investigates two transfer learning strategies using the VGG16 architecture:
 
+* **Transfer Learning (Feature Extraction)** – the pretrained convolutional layers remain frozen while only the classifier is trained.
+* **Fine-Tuning** – selected pretrained layers are unfrozen and retrained to improve performance on the waste classification dataset.
 
+The project compares both approaches using training curves and prediction results to better understand the impact of fine-tuning.
 
+---
 
-🎯 Project Objectives
+## 🎯 Objectives
 
+* Build an image classifier for waste products.
+* Apply transfer learning using a pretrained VGG16 network.
+* Compare feature extraction and fine-tuning approaches.
+* Evaluate model performance using accuracy and loss metrics.
+* Visualize predictions on unseen images.
 
-✅ Apply Transfer Learning with VGG16 for binary image classification
-✅ Build an Feature Extraction model (frozen base layers)
-✅ Build a Fine-Tuned model (unfrozen layers, deeper training)
-✅ Preprocess image data using Keras ImageDataGenerator
-✅ Plot & compare loss and accuracy curves for both models
-✅ Evaluate and visualize predictions on test images
+---
 
+## 📂 Dataset
 
+The dataset contains images of waste products grouped into two classes:
 
-🧠 Model Pipeline
+* Organic Waste
+* Recyclable Waste
 
-Waste Image (Organic or Recyclable)
-            │
-            ▼
-  ┌─────────────────────┐
-  │  VGG16 (ImageNet)   │  ← Pretrained base
-  └─────────┬───────────┘
-            │
-    ┌───────┴────────┐
-    ▼                ▼
-┌──────────────┐  ┌──────────────────┐
-│  Feature     │  │   Fine-Tuning    │
-│  Extraction  │  │   Model          │
-│  (Frozen)    │  │  (Unfrozen)      │
-└──────┬───────┘  └────────┬─────────┘
-       │                   │
-       ▼                   ▼
-  "Organic (O)"      "Recyclable (R)"
+Images were resized and normalized before training using TensorFlow's `ImageDataGenerator`.
 
+---
 
-📋 Task Breakdown
+## 🧠 Model Architecture
 
-TaskDescriptionTask 1Print the TensorFlow versionTask 2Create test_generator using test_datagenTask 3Print the length of train_generatorTask 4Print the model summaryTask 5Compile the modelTask 6Plot accuracy curves — Feature Extraction modelTask 7Plot loss curves — Fine-Tuned modelTask 8Plot accuracy curves — Fine-Tuned modelTask 9Visualize test image prediction — Feature Extraction modelTask 10Visualize test image prediction — Fine-Tuned model
+The classification model uses:
 
+* VGG16 (ImageNet Pretrained)
+* Transfer Learning
+* Fine-Tuning
+* Fully Connected Dense Layers
+* Dropout Regularization
+* Binary Classification Output
 
-📂 Dataset
+---
 
+## ⚙️ Methodology
 
-Source: Waste Classification Dataset — Kaggle
-Classes: Organic (O) and Recyclable (R)
-Split: Train / Validation (80/20) / Test
-Image size: 150 × 150 px
+### Data Preprocessing
 
+* Image resizing
+* Pixel normalization
+* Data generation using `ImageDataGenerator`
+* Train, validation, and test splits
 
-o-vs-r-split/
-├── train/
-│   ├── O/    ← Organic
-│   └── R/    ← Recyclable
-└── test/
-    ├── O/
-    └── R/
+### Transfer Learning
 
+The pretrained VGG16 network was used as a feature extractor while keeping its convolutional layers frozen.
 
-🛠️ Tech Stack
+### Fine-Tuning
 
-ToolPurposePython 3.xCore languageTensorFlow 2.17 / KerasModel building & trainingVGG16 (ImageNet)Pretrained CNN backboneImageDataGeneratorImage loading & preprocessingScikit-learnEvaluation metricsMatplotlibLoss & accuracy visualizations
+After initial training, selected pretrained layers were unfrozen and retrained to improve feature learning and model performance.
 
+---
 
-⚙️ Model Configuration
+## 📊 Results
 
-pythonimg_size    = (150, 150)
-batch_size  = 32
-n_epochs    = 10
-n_classes   = 2
-val_split   = 0.2
-optimizer   = Adam
-loss        = binary_crossentropy
+### Transfer Learning Loss
 
+![Transfer Learning Loss](images/transfer_learning_loss.png)
 
-📂 File Structure
+The training and validation loss curves illustrate how the feature extraction model learned throughout training.
 
-📦 IBM-AI-Engineering-Final-Project
- ┣ 📓 Final_Proj-Classify_Waste_Products_Using_TL_FT.ipynb
- ┗ 📄 README.md
+---
 
+### Transfer Learning Accuracy
 
-📜 Course
+![Transfer Learning Accuracy](images/transfer_learning_accuracy.png)
 
+Training and validation accuracy demonstrate the classification performance achieved using frozen VGG16 features.
 
-🎓 Final Project of the IBM AI Engineering Professional Certificate
-offered by IBM on Coursera.
+---
 
+### Fine-Tuning Loss
 
+![Fine-Tuning Loss](images/fine_tuning_loss.png)
 
+Fine-tuning reduced loss further by allowing selected pretrained layers to adapt to the waste classification dataset.
 
-🙋 Author
+---
 
-Samridhi Bhardwaj
+### Fine-Tuning Accuracy
+
+![Fine-Tuning Accuracy](images/fine_tuning_accuracy.png)
+
+Accuracy curves highlight the performance improvements obtained after fine-tuning the pretrained network.
+
+---
+
+## 🛠️ Technologies Used
+
+| Technology   | Purpose                         |
+| ------------ | ------------------------------- |
+| Python       | Programming Language            |
+| TensorFlow   | Deep Learning Framework         |
+| Keras        | Model Development               |
+| VGG16        | Transfer Learning               |
+| NumPy        | Numerical Computing             |
+| Matplotlib   | Visualization                   |
+| Scikit-learn | Data Preprocessing & Evaluation |
+
+---
+
+## 📁 Repository Structure
+
+```text
+waste-product-classification/
+│
+├── README.md
+├── requirements.txt
+├── main.py
+│
+├── src/
+│   ├── data_loader.py
+│   ├── model.py
+│   ├── training.py
+│   ├── evaluation.py
+│   └── visualization.py
+│
+├── images/
+│   ├── transfer_learning_loss.png
+│   ├── transfer_learning_accuracy.png
+│   ├── fine_tuning_loss.png
+│   ├── fine_tuning_accuracy.png
+│   ├── transfer_learning_prediction.png
+│   └── fine_tuning_prediction.png
+│
+└── models/
+```
+
+---
+
+## 💡 Key Learnings
+
+Through this project, I gained practical experience with:
+
+* Transfer Learning
+* Fine-Tuning Pretrained Networks
+* Computer Vision
+* Deep Learning Model Training
+* Image Classification
+* Performance Evaluation
+* Model Comparison
+* TensorFlow and Keras
+
+---
+
+## 🚀 Future Improvements
+
+* Evaluate additional architectures such as ResNet50 and EfficientNet.
+* Expand the dataset with more waste categories.
+* Apply advanced data augmentation techniques.
+* Deploy the classifier as a web application.
+* Compare multiple transfer learning strategies.
+
+---
+
+## 👨‍💻 Author
+
+**Samridhi Bhardwaj**
+
+Originally developed as part of a deep learning project and later refactored into a structured portfolio project demonstrating transfer learning and fine-tuning techniques for image classification.
